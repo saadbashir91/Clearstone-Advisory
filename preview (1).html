@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Clearstone Advisory — Workflow Improvement, Practical AI Implementation, and Custom Business Tools</title>
+  <meta name="description" content="Clearstone Advisory helps service businesses and financial professionals reduce manual work, improve client-facing processes, and implement practical AI-enabled workflows.">
+  <meta name="theme-color" content="#2563eb">
+  <style>
+    :root {
+      --bg:#0b1220;
+      --ink:#0f172a;
+      --text:#0f172a;
+      --muted:#475569;
+      --brand:#2563eb;
+      --brand2:#10b981;
+      --card:#ffffff;
+      --soft:#eef4ff;
+      --page:#f8fafc;
+      --line:#e2e8f0;
+      --line-soft:#dbe6f5;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--text);background:var(--page)}
+    a{color:var(--brand);text-decoration:none}
+    img{max-width:100%;display:block}
+    .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+
+    .topbar{background:var(--soft);border-bottom:1px solid var(--line);color:#1d4ed8;font-size:13px;font-weight:700}
+    .topbar .wrap{display:flex;justify-content:center;gap:8px;padding:10px 20px;text-align:center;flex-wrap:wrap}
+
+    header{position:sticky;top:0;background:#ffffffee;backdrop-filter:saturate(180%) blur(10px);border-bottom:1px solid var(--line);z-index:10}
+    nav{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:64px;padding:10px 0}
+    .brand{display:flex;align-items:center;gap:12px;color:var(--text);min-width:0}
+    .brand-mark{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,#dbeafe,#eef4ff);border:1px solid #bfdbfe;display:grid;place-items:center;font-weight:800;color:#1d4ed8;flex:0 0 auto}
+    .brand-copy{min-width:0}
+    .brand-copy strong{display:block;font-size:18px;line-height:1.05}
+    .brand-copy span{display:block;color:var(--muted);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    nav ul{list-style:none;display:flex;gap:18px;margin:0;padding:0;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+    nav ul a{color:var(--text)}
+    nav a.btn, .cta .primary{padding:12px 16px;border-radius:12px;background:var(--brand);color:#fff;font-weight:700;display:inline-flex;align-items:center;justify-content:center}
+    .ghost{padding:12px 16px;border-radius:12px;border:1px solid #cbd5e1;color:var(--text);background:#fff;font-weight:700;display:inline-flex;align-items:center;justify-content:center}
+
+    .hero{padding:76px 0 40px;background:linear-gradient(180deg,#ffffff,#f1f5f9)}
+    .hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:28px;align-items:center}
+    .eyebrow{display:inline-block;padding:8px 12px;border-radius:999px;background:var(--soft);color:#1d4ed8;font-weight:700;font-size:13px;margin-bottom:14px}
+    .hero h1{font-size:48px;line-height:1.06;margin:0 0 14px;max-width:760px}
+    .hero p{font-size:18px;color:#334155;max-width:720px;margin:0 0 10px}
+    .cta{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
+    .mini-list{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 0;padding:0;list-style:none}
+    .mini-list li{padding:8px 12px;border:1px solid var(--line-soft);border-radius:999px;background:#fff;color:#334155;font-size:14px}
+
+    .hero-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 6px 20px rgba(2,6,23,.06)}
+    .hero-card h3{margin:0 0 8px;font-size:18px}
+    .hero-card p{font-size:15px;color:var(--muted);margin:0 0 14px}
+    .stat{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+    .cardlet{padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--page)}
+    .cardlet strong{display:block;font-size:18px;margin-bottom:4px}
+    .cardlet span{color:var(--muted);font-size:14px}
+
+    section{padding:58px 0;border-top:1px solid var(--line);background:#fff}
+    h2{font-size:30px;margin:0 0 16px}
+    .lead{font-size:17px;color:var(--muted);max-width:780px;margin:0 0 22px}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+    .grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+    .grid2{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:start}
+    .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;box-shadow:0 1px 2px rgba(2,6,23,.04)}
+    .card h3{margin:0 0 8px;font-size:18px}
+    .muted{color:var(--muted)}
+    .tag{display:inline-block;padding:7px 11px;border-radius:999px;background:var(--soft);color:#1d4ed8;font-size:12px;font-weight:700;margin-bottom:10px}
+    .service-card{position:relative;overflow:hidden}
+    .service-card::before{content:"";position:absolute;left:0;top:0;width:100%;height:4px;background:linear-gradient(90deg,var(--brand),#60a5fa)}
+    .service-card ul,.feature-list,.founder-list{padding-left:18px;margin:12px 0 0}
+    .service-card li,.feature-list li,.founder-list li{color:var(--muted);margin:0 0 8px}
+    .how .step-num{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:999px;background:#e0ecff;color:#1d4ed8;font-weight:800;margin-bottom:10px}
+
+    .feature-main .button-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+    .metric{font-size:28px;font-weight:800;margin-bottom:6px;color:var(--text)}
+    .trust{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
+
+    .about-band{background:var(--page)}
+    .founder{display:grid;grid-template-columns:.92fr 1.08fr;gap:18px;align-items:stretch}
+    .founder-badge{display:inline-block;padding:8px 12px;border-radius:999px;background:var(--soft);color:#1d4ed8;font-weight:700;font-size:13px;margin-bottom:14px}
+
+    .cta-band{background:linear-gradient(135deg,#0f172a,#1e293b);color:#fff;border-top:none}
+    .cta-band .card{background:transparent;border:1px solid rgba(255,255,255,.14);box-shadow:none}
+    .cta-band .lead,.cta-band .muted,.cta-band p{color:#cbd5e1}
+    .cta-band a{color:#fff}
+    .cta-band .ghost{background:transparent;border-color:rgba(255,255,255,.25);color:#fff}
+
+    footer{padding:32px 0;background:var(--bg);color:#cbd5e1}
+    footer a{color:#93c5fd}
+    .footer-grid{display:grid;grid-template-columns:1.2fr .9fr .9fr;gap:18px}
+    .footer-title{font-weight:700;color:#fff;margin-bottom:10px}
+    .footer-list{display:grid;gap:8px}
+
+    @media (max-width:960px){
+      .hero-grid,.grid2,.founder,.footer-grid,.trust,.grid4{grid-template-columns:1fr 1fr}
+      .grid{grid-template-columns:1fr 1fr}
+    }
+    @media (max-width:760px){
+      nav{flex-direction:column;align-items:flex-start}
+      nav ul{width:100%;justify-content:flex-start}
+      .brand-copy span{white-space:normal}
+    }
+    @media (max-width:680px){
+      .hero h1{font-size:36px}
+      .hero-grid,.grid2,.founder,.footer-grid,.trust,.grid,.grid4,.stat{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="wrap">
+      <span>Featured solution:</span>
+      <strong>FundMentor</strong>
+      <span>for advisor and wealth workflows.</span>
+    </div>
+  </div>
+
+  <header>
+    <div class="wrap">
+      <nav>
+        <a href="#top" class="brand" aria-label="Clearstone Advisory home">
+          <span class="brand-mark">CA</span>
+          <span class="brand-copy">
+            <strong>Clearstone Advisory</strong>
+            <span>Workflow improvement, practical AI implementation, and custom business tools</span>
+          </span>
+        </a>
+        <ul>
+          <li><a href="#services">Solutions</a></li>
+          <li><a href="#fundmentor">FundMentor</a></li>
+          <li><a href="#process">How it works</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a class="btn" href="#contact">Book a Call</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <div class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <div class="eyebrow">For service businesses and financial professionals</div>
+          <h1>Modernize messy workflows.</h1>
+          <p>Clearstone Advisory helps businesses reduce manual work, improve client-facing processes, and implement practical AI-enabled workflows.</p>
+          <p>From workflow audits to targeted upgrades to lightweight custom tools, the focus is simple: make the business easier to run.</p>
+          <div class="cta">
+            <a class="primary" href="#contact">Book a Discovery Call</a>
+            <a class="ghost" href="#services">Explore Solutions</a>
+          </div>
+          <ul class="mini-list">
+            <li>Advisors and wealth teams</li>
+            <li>Service businesses</li>
+            <li>Operational workflows</li>
+            <li>Client-facing process improvement</li>
+          </ul>
+        </div>
+        <div class="hero-card">
+          <h3>What Clearstone helps you do</h3>
+          <p>Move from messy process reality to clearer workflow, stronger execution, and more useful business tools.</p>
+          <div class="stat">
+            <div class="cardlet"><strong>Audit</strong><span>Find bottlenecks, friction, and improvement priorities.</span></div>
+            <div class="cardlet"><strong>Upgrade</strong><span>Implement better structure, automation, and AI support.</span></div>
+            <div class="cardlet"><strong>Build</strong><span>Create lightweight tools around repeatable workflows.</span></div>
+            <div class="cardlet"><strong>FundMentor</strong><span>Featured solution for portfolio planning and client-ready workflow.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section>
+      <div class="wrap">
+        <h2>Most businesses do not have a technology problem first.</h2>
+        <p class="lead">They have a workflow problem: too much manual effort, disconnected tools, inconsistent follow-up, and processes that rely too heavily on memory or workarounds.</p>
+        <div class="grid4">
+          <div class="card">
+            <h3>Manual admin load</h3>
+            <p class="muted">Too many steps still depend on copying, pasting, repeating, and stitching together information.</p>
+          </div>
+          <div class="card">
+            <h3>Weak process consistency</h3>
+            <p class="muted">Important work gets handled differently depending on who is doing it or how busy the day is.</p>
+          </div>
+          <div class="card">
+            <h3>Fragmented client workflows</h3>
+            <p class="muted">Intake, reporting, proposals, and follow-up often feel slower and heavier than they should.</p>
+          </div>
+          <div class="card">
+            <h3>Tools without workflow logic</h3>
+            <p class="muted">Teams may already have software, but not a cleaner operating structure behind how work actually moves.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="services" style="background:#f8fafc">
+      <div class="wrap">
+        <h2>Solutions built around operational improvement</h2>
+        <p class="lead">Clearstone is structured around one promise and three offers. Each supports a different stage of the same journey: diagnose, improve, and build when needed.</p>
+        <div class="grid">
+          <div class="card service-card">
+            <div class="tag">Offer 1</div>
+            <h3>Workflow Audit</h3>
+            <p class="muted">A structured review of how the process works today, where friction exists, and where the highest-value improvements can be made first.</p>
+            <ul>
+              <li>Current-state workflow review</li>
+              <li>Bottleneck and admin-friction analysis</li>
+              <li>Client-experience and follow-up gaps</li>
+              <li>Practical improvement roadmap</li>
+            </ul>
+          </div>
+          <div class="card service-card">
+            <div class="tag">Offer 2</div>
+            <h3>Workflow Upgrade</h3>
+            <p class="muted">Targeted process improvement using better structure, practical AI-enabled support, templates, SOPs, automation, and workflow redesign.</p>
+            <ul>
+              <li>Process redesign and documentation</li>
+              <li>AI-assisted summaries and communication workflows</li>
+              <li>Reporting and client-prep improvements</li>
+              <li>CRM and follow-up workflow support</li>
+            </ul>
+          </div>
+          <div class="card service-card">
+            <div class="tag">Offer 3</div>
+            <h3>Custom Tool Build</h3>
+            <p class="muted">Lightweight internal-use tools designed around a specific business workflow to make repeatable work clearer, faster, and easier to manage.</p>
+            <ul>
+              <li>Intake and triage tools</li>
+              <li>Dashboards and reporting helpers</li>
+              <li>Proposal or review assistants</li>
+              <li>Workflow trackers and niche utilities</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="fundmentor">
+      <div class="wrap grid2">
+        <div>
+          <h2>Featured solution: FundMentor</h2>
+          <p class="lead">FundMentor is positioned as a Clearstone solution for advisor and wealth workflows, not as the whole company. It shows how Clearstone thinks: business first, workflow-driven, and practical in use.</p>
+          <div class="card feature-main">
+            <span class="tag">Portfolio planning and review solution</span>
+            <h3>Build, review, and explain portfolios with more clarity.</h3>
+            <p class="muted">FundMentor helps advisors and wealth teams move from ETF ideas to more structured planning, portfolio diagnostics, and client-ready communication. It goes beyond a screener by supporting logic, review, and explainability within one workflow.</p>
+            <ul class="feature-list">
+              <li>Portfolio planning and sleeve design</li>
+              <li>ETF comparison with clearer context</li>
+              <li>Portfolio diagnostics, overlap, and concentration review</li>
+              <li>Rebalancing workflow and client-ready notes</li>
+            </ul>
+            <div class="button-row">
+              <a class="btn" href="https://fundmentor.streamlit.app/" target="_blank" rel="noopener">Launch Demo</a>
+              <a class="ghost" href="https://saadbashir91.github.io/FundMentor/" target="_blank" rel="noopener">View FundMentor Site</a>
+            </div>
+          </div>
+        </div>
+        <div class="trust">
+          <div class="card">
+            <div class="metric">4-step</div>
+            <p class="muted">Plan, explore ideas, review the portfolio, and rebalance with more structure.</p>
+          </div>
+          <div class="card">
+            <div class="metric">Clearer</div>
+            <p class="muted">Designed for stronger client conversations, better workflow logic, and more usable portfolio review.</p>
+          </div>
+          <div class="card">
+            <div class="metric">Flexible</div>
+            <p class="muted">Works as a live demo, a conversation starter, and a proof point for Clearstone’s ability to build workflow solutions.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section style="background:#f8fafc">
+      <div class="wrap">
+        <h2>Who Clearstone works with</h2>
+        <p class="lead">The strongest fit is with workflow-heavy environments where manual work, client communication, and recurring operational processes still create drag.</p>
+        <div class="grid4">
+          <div class="card">
+            <h3>Financial professionals</h3>
+            <p class="muted">Advisors, wealth teams, planners, and firms looking to improve client-facing workflows and internal support processes.</p>
+          </div>
+          <div class="card">
+            <h3>Service businesses</h3>
+            <p class="muted">Businesses that depend on structured intake, documentation, follow-up, and process consistency to operate well.</p>
+          </div>
+          <div class="card">
+            <h3>Founder-led firms</h3>
+            <p class="muted">Teams where growth has outpaced process clarity and the operating model needs to become more intentional.</p>
+          </div>
+          <div class="card">
+            <h3>Workflow-heavy small teams</h3>
+            <p class="muted">Organizations that want improvement without the overhead of large, expensive transformation programs.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="process" class="how">
+      <div class="wrap">
+        <h2>How the work gets done</h2>
+        <p class="lead">The approach is deliberately simple. Clearstone starts with the workflow itself, then introduces tools where they genuinely help.</p>
+        <div class="grid4">
+          <div class="card">
+            <div class="step-num">1</div>
+            <h3>Assess</h3>
+            <p class="muted">Review the current workflow, understand where time and clarity are being lost, and map the core pain points.</p>
+          </div>
+          <div class="card">
+            <div class="step-num">2</div>
+            <h3>Prioritize</h3>
+            <p class="muted">Focus on the highest-value improvements first rather than generating a long list of ideas without execution value.</p>
+          </div>
+          <div class="card">
+            <div class="step-num">3</div>
+            <h3>Improve</h3>
+            <p class="muted">Implement practical workflow changes, documentation, templates, AI-assisted support, and better structure.</p>
+          </div>
+          <div class="card">
+            <div class="step-num">4</div>
+            <h3>Build when needed</h3>
+            <p class="muted">If the workflow deserves its own tool, create a lightweight solution around how the business actually operates.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="about-band">
+      <div class="wrap founder">
+        <div class="card">
+          <div class="founder-badge">About the founder</div>
+          <h2 style="margin-top:0">Built around process, clarity, and practical implementation.</h2>
+          <p class="muted">Clearstone Advisory was founded by Saad Bashir. His background spans business analysis, process engineering, wealth management, and financial technology — environments where structure, execution, and client-facing clarity matter.</p>
+          <p class="muted">Over time, the same pattern kept appearing: too much manual work, fragmented workflows, disconnected tools, and processes that were functional enough to continue, but not strong enough to scale cleanly.</p>
+        </div>
+        <div class="card">
+          <h3 style="margin-top:0">What that experience translates into</h3>
+          <ul class="founder-list">
+            <li>Strong business-process thinking</li>
+            <li>Operational and workflow design perspective</li>
+            <li>Financial-services credibility and product understanding</li>
+            <li>Practical interest in AI and lightweight business tools</li>
+          </ul>
+          <h3 style="margin-top:24px">Why Clearstone exists</h3>
+          <p class="muted">The goal is not technology for its own sake. It is to help businesses improve how work gets done, create less friction, and operate with more structure through solutions that are commercially useful.</p>
+          <p class="muted">FundMentor is one example of that approach in action — a workflow solution built for a specific use case under a broader business focused on operational clarity.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="cta-band">
+      <div class="wrap">
+        <div class="card">
+          <h2 style="color:#fff;margin-bottom:12px">Have a workflow problem worth solving?</h2>
+          <p class="lead">Whether the need is a workflow review, a targeted improvement project, or a more focused business tool, the first step is a conversation.</p>
+          <div class="cta">
+            <a class="primary" href="mailto:saad.bashir.1991@gmail.com?subject=Discovery%20Call%20Request">Email Saad</a>
+            <a class="ghost" href="https://www.linkedin.com/company/fundmentorportfolioplanning/" target="_blank" rel="noopener">LinkedIn Page</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-grid">
+      <div>
+        <div class="footer-title">Clearstone Advisory</div>
+        <div>Workflow improvement, practical AI implementation, and custom business tools.</div>
+        <div style="margin-top:8px">Featured solution: FundMentor</div>
+      </div>
+      <div>
+        <div class="footer-title">Links</div>
+        <div class="footer-list">
+          <a href="#services">Solutions</a>
+          <a href="#fundmentor">FundMentor</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-title">External</div>
+        <div class="footer-list">
+          <a href="https://saadbashir91.github.io/FundMentor/" target="_blank" rel="noopener">FundMentor Website</a>
+          <a href="https://fundmentor.streamlit.app/" target="_blank" rel="noopener">Launch Demo</a>
+          <a href="https://www.linkedin.com/company/fundmentorportfolioplanning/" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
