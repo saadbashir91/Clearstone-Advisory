@@ -3,110 +3,715 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Clearstone Advisory — Workflow Improvement, Practical AI Implementation, and Custom Business Tools</title>
-  <meta name="description" content="Clearstone Advisory helps service businesses and financial professionals reduce manual work, improve client-facing processes, and implement practical AI-enabled workflows.">
+  <title>Clearstone Advisory — Workflow Improvement for Financial Professionals and Service Businesses</title>
+  <meta name="description" content="Clearstone Advisory helps financial professionals and service businesses reduce manual work, improve recurring workflows, and implement practical AI-supported systems and custom internal tools.">
   <meta name="theme-color" content="#2563eb">
   <style>
-    :root {
-      --bg:#0b1220;
+    :root{
+      --bg:#07111f;
       --ink:#0f172a;
       --text:#0f172a;
-      --muted:#475569;
+      --muted:#526277;
       --brand:#2563eb;
-      --brand2:#10b981;
+      --brand-2:#60a5fa;
+      --accent:#10b981;
       --card:#ffffff;
-      --soft:#eef4ff;
-      --page:#f8fafc;
-      --line:#e2e8f0;
-      --line-soft:#dbe6f5;
+      --page:#f5f8fc;
+      --soft:#edf4ff;
+      --soft-2:#f3f8ff;
+      --line:#dbe5f1;
+      --line-2:#cddbeb;
+      --shadow:0 12px 40px rgba(15,23,42,.08);
+      --shadow-soft:0 4px 20px rgba(15,23,42,.05);
+      --radius:18px;
+      --radius-sm:14px;
+      --max:1140px;
     }
+
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
-    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--text);background:var(--page)}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(96,165,250,.08), transparent 30%),
+        radial-gradient(circle at 85% 10%, rgba(16,185,129,.06), transparent 25%),
+        var(--page);
+      overflow-x:hidden;
+    }
+
     a{color:var(--brand);text-decoration:none}
     img{max-width:100%;display:block}
-    .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+    .wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
 
-    .topbar{background:var(--soft);border-bottom:1px solid var(--line);color:#1d4ed8;font-size:13px;font-weight:700}
-    .topbar .wrap{display:flex;justify-content:center;gap:8px;padding:10px 20px;text-align:center;flex-wrap:wrap}
+    .section-kicker{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:var(--soft);
+      color:#1d4ed8;
+      font-size:13px;
+      font-weight:800;
+      letter-spacing:.01em;
+      margin-bottom:14px;
+      border:1px solid #d7e7ff;
+    }
+    .section-kicker::before{
+      content:"";
+      width:8px;height:8px;border-radius:999px;
+      background:linear-gradient(135deg,var(--brand),var(--accent));
+      box-shadow:0 0 0 6px rgba(37,99,235,.08);
+    }
 
-    header{position:sticky;top:0;background:#ffffffee;backdrop-filter:saturate(180%) blur(10px);border-bottom:1px solid var(--line);z-index:10}
-    nav{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:64px;padding:10px 0}
-    .brand{display:flex;align-items:center;gap:12px;color:var(--text);min-width:0}
-    .brand-mark{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,#dbeafe,#eef4ff);border:1px solid #bfdbfe;display:grid;place-items:center;font-weight:800;color:#1d4ed8;flex:0 0 auto}
+    .topbar{
+      position:relative;
+      background:linear-gradient(90deg,#eef5ff,#edfdf7,#eef5ff);
+      background-size:200% 100%;
+      animation:barShift 12s linear infinite;
+      border-bottom:1px solid var(--line);
+      color:#1d4ed8;
+      font-size:13px;
+      font-weight:800;
+      overflow:hidden;
+    }
+    .topbar::after{
+      content:"";
+      position:absolute;inset:0;
+      background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);
+      transform:translateX(-100%);
+      animation:shine 7s linear infinite;
+    }
+    .topbar .wrap{
+      display:flex;
+      justify-content:center;
+      gap:8px;
+      padding:10px 20px;
+      text-align:center;
+      flex-wrap:wrap;
+      position:relative;
+      z-index:1;
+    }
+
+    header{
+      position:sticky;
+      top:0;
+      z-index:50;
+      background:rgba(255,255,255,.74);
+      backdrop-filter:saturate(180%) blur(16px);
+      border-bottom:1px solid rgba(219,229,241,.85);
+      transition:box-shadow .25s ease,border-color .25s ease,background .25s ease;
+    }
+    header.scrolled{
+      box-shadow:0 10px 30px rgba(15,23,42,.06);
+      background:rgba(255,255,255,.84);
+    }
+
+    nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      min-height:72px;
+      padding:10px 0;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      color:var(--text);
+      min-width:0;
+    }
+
+    .brand-mark{
+      position:relative;
+      width:44px;height:44px;border-radius:14px;
+      background:linear-gradient(135deg,#dbeafe,#eff6ff 55%,#ecfeff);
+      border:1px solid #bfdbfe;
+      display:grid;place-items:center;
+      font-weight:900;
+      color:#1d4ed8;
+      flex:0 0 auto;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.9), 0 10px 22px rgba(37,99,235,.12);
+      overflow:hidden;
+    }
+    .brand-mark::after{
+      content:"";
+      position:absolute;inset:auto -30% -30% auto;
+      width:36px;height:36px;border-radius:50%;
+      background:radial-gradient(circle,rgba(96,165,250,.45),transparent 70%);
+      animation:floatPulse 5s ease-in-out infinite;
+    }
+
     .brand-copy{min-width:0}
     .brand-copy strong{display:block;font-size:18px;line-height:1.05}
-    .brand-copy span{display:block;color:var(--muted);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    nav ul{list-style:none;display:flex;gap:18px;margin:0;padding:0;align-items:center;flex-wrap:wrap;justify-content:flex-end}
-    nav ul a{color:var(--text)}
-    nav a.btn, .cta .primary{padding:12px 16px;border-radius:12px;background:var(--brand);color:#fff;font-weight:700;display:inline-flex;align-items:center;justify-content:center}
-    .ghost{padding:12px 16px;border-radius:12px;border:1px solid #cbd5e1;color:var(--text);background:#fff;font-weight:700;display:inline-flex;align-items:center;justify-content:center}
+    .brand-copy span{
+      display:block;
+      color:var(--muted);
+      font-size:12px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
 
-    .hero{padding:76px 0 40px;background:linear-gradient(180deg,#ffffff,#f1f5f9)}
-    .hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:28px;align-items:center}
-    .eyebrow{display:inline-block;padding:8px 12px;border-radius:999px;background:var(--soft);color:#1d4ed8;font-weight:700;font-size:13px;margin-bottom:14px}
-    .hero h1{font-size:48px;line-height:1.06;margin:0 0 14px;max-width:760px}
-    .hero p{font-size:18px;color:#334155;max-width:720px;margin:0 0 10px}
-    .cta{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
-    .mini-list{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 0;padding:0;list-style:none}
-    .mini-list li{padding:8px 12px;border:1px solid var(--line-soft);border-radius:999px;background:#fff;color:#334155;font-size:14px}
+    nav ul{
+      list-style:none;
+      display:flex;
+      gap:18px;
+      margin:0;
+      padding:0;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
 
-    .hero-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 6px 20px rgba(2,6,23,.06)}
-    .hero-card h3{margin:0 0 8px;font-size:18px}
+    nav ul a{
+      color:var(--text);
+      position:relative;
+      font-weight:600;
+    }
+    nav ul a:not(.btn)::after{
+      content:"";
+      position:absolute;
+      left:0;bottom:-4px;
+      width:100%;height:2px;
+      transform:scaleX(0);
+      transform-origin:right;
+      transition:transform .25s ease;
+      background:linear-gradient(90deg,var(--brand),var(--accent));
+      border-radius:999px;
+    }
+    nav ul a:not(.btn):hover::after{transform:scaleX(1);transform-origin:left}
+
+    .btn,
+    .cta .primary{
+      position:relative;
+      padding:12px 16px;
+      border-radius:14px;
+      background:linear-gradient(135deg,var(--brand),#3b82f6 60%,#60a5fa);
+      color:#fff;
+      font-weight:800;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+      border:1px solid rgba(37,99,235,.08);
+      box-shadow:0 10px 24px rgba(37,99,235,.18);
+      transition:transform .2s ease, box-shadow .2s ease, filter .2s ease;
+    }
+    .btn::after,
+    .cta .primary::after{
+      content:"";
+      position:absolute;inset:0;
+      background:linear-gradient(120deg,transparent 25%,rgba(255,255,255,.26) 50%,transparent 75%);
+      transform:translateX(-130%);
+      transition:transform .9s ease;
+    }
+    .btn:hover,
+    .cta .primary:hover{
+      transform:translateY(-2px);
+      box-shadow:0 16px 34px rgba(37,99,235,.22);
+      filter:saturate(1.06);
+    }
+    .btn:hover::after,
+    .cta .primary:hover::after{
+      transform:translateX(130%);
+    }
+
+    .ghost{
+      padding:12px 16px;
+      border-radius:14px;
+      border:1px solid var(--line-2);
+      color:var(--text);
+      background:rgba(255,255,255,.72);
+      backdrop-filter:blur(8px);
+      font-weight:800;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease,background .2s ease;
+    }
+    .ghost:hover{
+      transform:translateY(-2px);
+      border-color:#b6cae4;
+      background:#fff;
+      box-shadow:var(--shadow-soft);
+    }
+
+    .hero{
+      position:relative;
+      padding:88px 0 56px;
+      background:
+        radial-gradient(circle at 12% 12%, rgba(96,165,250,.16), transparent 24%),
+        radial-gradient(circle at 88% 18%, rgba(16,185,129,.11), transparent 18%),
+        linear-gradient(180deg,#ffffff 0%,#f4f8fd 100%);
+      overflow:hidden;
+      isolation:isolate;
+    }
+
+    .hero::before,
+    .hero::after{
+      content:"";
+      position:absolute;
+      border-radius:50%;
+      filter:blur(14px);
+      z-index:-1;
+      animation:orbFloat 12s ease-in-out infinite;
+      pointer-events:none;
+    }
+    .hero::before{
+      width:340px;height:340px;
+      top:-90px;right:-80px;
+      background:radial-gradient(circle,rgba(37,99,235,.18),transparent 68%);
+    }
+    .hero::after{
+      width:260px;height:260px;
+      left:-70px;bottom:-60px;
+      background:radial-gradient(circle,rgba(16,185,129,.14),transparent 68%);
+      animation-delay:-4s;
+    }
+
+    .grid-overlay{
+      position:absolute;
+      inset:0;
+      background-image:
+        linear-gradient(rgba(148,163,184,.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(148,163,184,.08) 1px, transparent 1px);
+      background-size:32px 32px;
+      mask-image:linear-gradient(to bottom, rgba(0,0,0,.55), transparent 85%);
+      pointer-events:none;
+      z-index:-1;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:28px;
+      align-items:center;
+      position:relative;
+    }
+
+    .eyebrow{
+      display:inline-block;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.7);
+      border:1px solid #dce9fb;
+      color:#1d4ed8;
+      font-weight:800;
+      font-size:13px;
+      margin-bottom:14px;
+      box-shadow:0 10px 30px rgba(15,23,42,.04);
+    }
+
+    .hero h1{
+      font-size:54px;
+      line-height:1.02;
+      margin:0 0 16px;
+      max-width:780px;
+      letter-spacing:-.03em;
+    }
+
+    .hero h1 .accent{
+      background:linear-gradient(135deg,#1d4ed8 0%,#2563eb 40%,#10b981 100%);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+
+    .hero p{
+      font-size:18px;
+      color:#334155;
+      max-width:740px;
+      margin:0 0 12px;
+    }
+
+    .cta{
+      display:flex;
+      gap:12px;
+      margin-top:24px;
+      flex-wrap:wrap;
+    }
+
+    .mini-list{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin:20px 0 0;
+      padding:0;
+      list-style:none;
+    }
+    .mini-list li{
+      padding:9px 13px;
+      border:1px solid #d9e7f8;
+      border-radius:999px;
+      background:rgba(255,255,255,.84);
+      color:#334155;
+      font-size:14px;
+      box-shadow:0 6px 18px rgba(15,23,42,.04);
+      transition:transform .2s ease, box-shadow .2s ease;
+    }
+    .mini-list li:hover{
+      transform:translateY(-2px);
+      box-shadow:0 12px 24px rgba(15,23,42,.08);
+    }
+
+    .hero-visual{
+      position:relative;
+      min-height:470px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+    }
+
+    .flow-line{
+      position:absolute;
+      inset:14% 8%;
+      border-radius:24px;
+      border:1px dashed rgba(59,130,246,.22);
+      opacity:.9;
+      animation:slowSpin 22s linear infinite;
+    }
+
+    .flow-line.two{
+      inset:22% 18%;
+      border-color:rgba(16,185,129,.18);
+      animation-direction:reverse;
+      animation-duration:26s;
+    }
+
+    .hero-card{
+      position:relative;
+      width:min(100%, 470px);
+      background:rgba(255,255,255,.72);
+      border:1px solid rgba(219,229,241,.9);
+      border-radius:24px;
+      padding:22px;
+      box-shadow:0 22px 60px rgba(15,23,42,.11);
+      backdrop-filter:blur(18px);
+      overflow:hidden;
+      z-index:2;
+    }
+    .hero-card::before{
+      content:"";
+      position:absolute;inset:0 0 auto 0;height:4px;
+      background:linear-gradient(90deg,var(--brand),#60a5fa,var(--accent));
+    }
+    .hero-card::after{
+      content:"";
+      position:absolute;
+      inset:auto -30px -30px auto;
+      width:140px;height:140px;border-radius:50%;
+      background:radial-gradient(circle,rgba(37,99,235,.12),transparent 70%);
+      pointer-events:none;
+    }
+    .hero-card h3{margin:0 0 8px;font-size:19px}
     .hero-card p{font-size:15px;color:var(--muted);margin:0 0 14px}
-    .stat{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
-    .cardlet{padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--page)}
-    .cardlet strong{display:block;font-size:18px;margin-bottom:4px}
+
+    .stat{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      margin-top:12px;
+    }
+
+    .cardlet{
+      position:relative;
+      padding:14px;
+      border:1px solid var(--line);
+      border-radius:16px;
+      background:linear-gradient(180deg,rgba(255,255,255,.9),rgba(246,250,255,.95));
+      box-shadow:0 10px 24px rgba(15,23,42,.04);
+      transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+    }
+    .cardlet:hover{
+      transform:translateY(-4px);
+      border-color:#c9dcf4;
+      box-shadow:0 18px 30px rgba(15,23,42,.08);
+    }
+    .cardlet strong{display:block;font-size:18px;margin-bottom:5px}
     .cardlet span{color:var(--muted);font-size:14px}
 
-    section{padding:58px 0;border-top:1px solid var(--line);background:#fff}
-    h2{font-size:30px;margin:0 0 16px}
-    .lead{font-size:17px;color:var(--muted);max-width:780px;margin:0 0 22px}
-    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+    section{
+      position:relative;
+      padding:68px 0;
+      border-top:1px solid rgba(219,229,241,.8);
+      background:#fff;
+    }
+
+    section.alt{
+      background:
+        linear-gradient(180deg,#f8fbff 0%,#f5f9fd 100%);
+    }
+
+    h2{
+      font-size:34px;
+      margin:0 0 16px;
+      letter-spacing:-.02em;
+    }
+
+    .lead{
+      font-size:17px;
+      color:var(--muted);
+      max-width:800px;
+      margin:0 0 26px;
+    }
+
+    .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
     .grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
-    .grid2{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:start}
-    .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;box-shadow:0 1px 2px rgba(2,6,23,.04)}
-    .card h3{margin:0 0 8px;font-size:18px}
+    .grid2{display:grid;grid-template-columns:1.08fr .92fr;gap:24px;align-items:start}
+
+    .card{
+      position:relative;
+      background:linear-gradient(180deg,#ffffff,#fbfdff);
+      border:1px solid var(--line);
+      border-radius:var(--radius-sm);
+      padding:22px;
+      box-shadow:var(--shadow-soft);
+      transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+      overflow:hidden;
+    }
+    .card::after{
+      content:"";
+      position:absolute;
+      inset:auto auto -40px -40px;
+      width:90px;height:90px;border-radius:50%;
+      background:radial-gradient(circle,rgba(37,99,235,.07),transparent 70%);
+      transition:transform .3s ease;
+      pointer-events:none;
+    }
+    .card:hover{
+      transform:translateY(-5px);
+      border-color:#c7d9ee;
+      box-shadow:0 18px 36px rgba(15,23,42,.08);
+    }
+    .card:hover::after{transform:scale(1.15)}
+    .card h3{margin:0 0 9px;font-size:19px}
     .muted{color:var(--muted)}
-    .tag{display:inline-block;padding:7px 11px;border-radius:999px;background:var(--soft);color:#1d4ed8;font-size:12px;font-weight:700;margin-bottom:10px}
-    .service-card{position:relative;overflow:hidden}
-    .service-card::before{content:"";position:absolute;left:0;top:0;width:100%;height:4px;background:linear-gradient(90deg,var(--brand),#60a5fa)}
-    .service-card ul,.feature-list,.founder-list{padding-left:18px;margin:12px 0 0}
-    .service-card li,.feature-list li,.founder-list li{color:var(--muted);margin:0 0 8px}
-    .how .step-num{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:999px;background:#e0ecff;color:#1d4ed8;font-weight:800;margin-bottom:10px}
 
-    .feature-main .button-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
-    .metric{font-size:28px;font-weight:800;margin-bottom:6px;color:var(--text)}
-    .trust{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
+    .tag{
+      display:inline-block;
+      padding:7px 11px;
+      border-radius:999px;
+      background:var(--soft);
+      color:#1d4ed8;
+      font-size:12px;
+      font-weight:800;
+      margin-bottom:10px;
+      border:1px solid #d9e8ff;
+    }
 
-    .about-band{background:var(--page)}
-    .founder{display:grid;grid-template-columns:.92fr 1.08fr;gap:18px;align-items:stretch}
-    .founder-badge{display:inline-block;padding:8px 12px;border-radius:999px;background:var(--soft);color:#1d4ed8;font-weight:700;font-size:13px;margin-bottom:14px}
+    .service-card{overflow:hidden}
+    .service-card::before{
+      content:"";
+      position:absolute;left:0;top:0;width:100%;height:4px;
+      background:linear-gradient(90deg,var(--brand),#60a5fa,var(--accent));
+    }
 
-    .cta-band{background:linear-gradient(135deg,#0f172a,#1e293b);color:#fff;border-top:none}
-    .cta-band .card{background:transparent;border:1px solid rgba(255,255,255,.14);box-shadow:none}
+    .service-card ul,.feature-list,.founder-list,.fit-list,.challenge-list{
+      padding-left:18px;
+      margin:12px 0 0;
+    }
+    .service-card li,.feature-list li,.founder-list li,.fit-list li,.challenge-list li{
+      color:var(--muted);
+      margin:0 0 8px;
+    }
+
+    .how .step-num{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:36px;height:36px;
+      border-radius:999px;
+      background:linear-gradient(135deg,#dbeafe,#e9f5ff);
+      color:#1d4ed8;
+      font-weight:900;
+      margin-bottom:12px;
+      box-shadow:0 10px 20px rgba(37,99,235,.12);
+    }
+
+    .feature-main .button-row{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:18px;
+    }
+
+    .metric{
+      font-size:28px;
+      font-weight:900;
+      margin-bottom:8px;
+      color:var(--text);
+      letter-spacing:-.02em;
+    }
+
+    .trust{
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      gap:18px;
+    }
+
+    .about-band{
+      background:
+        radial-gradient(circle at 10% 20%, rgba(96,165,250,.06), transparent 22%),
+        var(--page);
+    }
+
+    .founder{
+      display:grid;
+      grid-template-columns:.94fr 1.06fr;
+      gap:18px;
+      align-items:stretch;
+    }
+
+    .founder-badge{
+      display:inline-block;
+      padding:8px 12px;
+      border-radius:999px;
+      background:var(--soft);
+      color:#1d4ed8;
+      font-weight:800;
+      font-size:13px;
+      margin-bottom:14px;
+      border:1px solid #dce9fb;
+    }
+
+    .cta-band{
+      background:
+        radial-gradient(circle at 15% 20%, rgba(59,130,246,.22), transparent 28%),
+        radial-gradient(circle at 85% 10%, rgba(16,185,129,.16), transparent 20%),
+        linear-gradient(135deg,#08101e,#0f172a 45%,#162338 100%);
+      color:#fff;
+      border-top:none;
+      overflow:hidden;
+    }
+
+    .cta-band::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+      background-size:34px 34px;
+      mask-image:linear-gradient(to bottom, rgba(0,0,0,.65), transparent);
+      pointer-events:none;
+    }
+
+    .cta-band .card{
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.14);
+      box-shadow:none;
+      backdrop-filter:blur(10px);
+    }
+    .cta-band .card:hover{
+      transform:none;
+      border-color:rgba(255,255,255,.18);
+      box-shadow:none;
+    }
     .cta-band .lead,.cta-band .muted,.cta-band p{color:#cbd5e1}
     .cta-band a{color:#fff}
-    .cta-band .ghost{background:transparent;border-color:rgba(255,255,255,.25);color:#fff}
+    .cta-band .ghost{
+      background:rgba(255,255,255,.04);
+      border-color:rgba(255,255,255,.22);
+      color:#fff;
+    }
+    .cta-band .ghost:hover{
+      background:rgba(255,255,255,.09);
+      box-shadow:none;
+    }
 
-    footer{padding:32px 0;background:var(--bg);color:#cbd5e1}
+    footer{
+      padding:36px 0;
+      background:var(--bg);
+      color:#cbd5e1;
+      position:relative;
+    }
+    footer::before{
+      content:"";
+      position:absolute;left:0;right:0;top:0;height:1px;
+      background:linear-gradient(90deg,transparent,rgba(96,165,250,.35),transparent);
+    }
     footer a{color:#93c5fd}
-    .footer-grid{display:grid;grid-template-columns:1.2fr .9fr .9fr;gap:18px}
-    .footer-title{font-weight:700;color:#fff;margin-bottom:10px}
+    .footer-grid{
+      display:grid;
+      grid-template-columns:1.2fr .9fr .9fr;
+      gap:18px;
+    }
+    .footer-title{
+      font-weight:800;
+      color:#fff;
+      margin-bottom:10px;
+    }
     .footer-list{display:grid;gap:8px}
+
+    .reveal{
+      opacity:0;
+      transform:translateY(24px);
+      transition:opacity .7s ease, transform .7s ease;
+    }
+    .reveal.in-view{
+      opacity:1;
+      transform:none;
+    }
+
+    @keyframes barShift{
+      0%{background-position:0% 50%}
+      100%{background-position:200% 50%}
+    }
+    @keyframes shine{
+      0%{transform:translateX(-100%)}
+      100%{transform:translateX(130%)}
+    }
+    @keyframes orbFloat{
+      0%,100%{transform:translate3d(0,0,0) scale(1)}
+      50%{transform:translate3d(0,14px,0) scale(1.04)}
+    }
+    @keyframes floatPulse{
+      0%,100%{transform:scale(1);opacity:.6}
+      50%{transform:scale(1.16);opacity:1}
+    }
+    @keyframes slowSpin{
+      from{transform:rotate(0deg)}
+      to{transform:rotate(360deg)}
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      *,*::before,*::after{
+        animation:none !important;
+        transition:none !important;
+        scroll-behavior:auto !important;
+      }
+      .reveal{opacity:1;transform:none}
+    }
+
+    @media (max-width:1100px){
+      .grid{grid-template-columns:1fr 1fr}
+    }
 
     @media (max-width:960px){
       .hero-grid,.grid2,.founder,.footer-grid,.trust,.grid4{grid-template-columns:1fr 1fr}
-      .grid{grid-template-columns:1fr 1fr}
+      .hero h1{font-size:46px}
+      .hero-visual{min-height:420px}
     }
+
     @media (max-width:760px){
       nav{flex-direction:column;align-items:flex-start}
       nav ul{width:100%;justify-content:flex-start}
       .brand-copy span{white-space:normal}
     }
+
     @media (max-width:680px){
+      .hero{padding-top:72px}
       .hero h1{font-size:36px}
       .hero-grid,.grid2,.founder,.footer-grid,.trust,.grid,.grid4,.stat{grid-template-columns:1fr}
+      .hero-visual{min-height:auto}
+      section{padding:56px 0}
+      h2{font-size:29px}
     }
   </style>
 </head>
@@ -119,18 +724,19 @@
     </div>
   </div>
 
-  <header>
+  <header id="site-header">
     <div class="wrap">
       <nav>
         <a href="#top" class="brand" aria-label="Clearstone Advisory home">
           <span class="brand-mark">CA</span>
           <span class="brand-copy">
             <strong>Clearstone Advisory</strong>
-            <span>Workflow improvement, practical AI implementation, and custom business tools</span>
+            <span>Workflow improvement for financial professionals and service businesses</span>
           </span>
         </a>
         <ul>
           <li><a href="#services">Solutions</a></li>
+          <li><a href="#fit">Who it's for</a></li>
           <li><a href="#fundmentor">FundMentor</a></li>
           <li><a href="#process">How it works</a></li>
           <li><a href="#about">About</a></li>
@@ -142,112 +748,230 @@
 
   <main id="top">
     <div class="hero">
+      <div class="grid-overlay"></div>
       <div class="wrap hero-grid">
-        <div>
-          <div class="eyebrow">For service businesses and financial professionals</div>
-          <h1>Modernize messy workflows.</h1>
-          <p>Clearstone Advisory helps businesses reduce manual work, improve client-facing processes, and implement practical AI-enabled workflows.</p>
-          <p>From workflow audits to targeted upgrades to lightweight custom tools, the focus is simple: make the business easier to run.</p>
+        <div class="reveal">
+          <div class="eyebrow">For financial professionals and service businesses</div>
+          <h1>Reduce manual work and <span class="accent">improve the way your business runs.</span></h1>
+          <p>Clearstone Advisory helps small firms streamline recurring workflows, improve client-facing processes, and implement practical AI-supported systems without adding unnecessary complexity.</p>
+          <p>From workflow reviews to targeted process improvement to lightweight internal tools, the goal is simple: help the business run with more clarity, consistency, and less operational drag.</p>
           <div class="cta">
             <a class="primary" href="#contact">Book a Discovery Call</a>
-            <a class="ghost" href="#services">Explore Solutions</a>
+            <a class="ghost" href="#services">See Solutions</a>
           </div>
           <ul class="mini-list">
-            <li>Advisors and wealth teams</li>
-            <li>Service businesses</li>
-            <li>Operational workflows</li>
-            <li>Client-facing process improvement</li>
+            <li>Reduce admin drag</li>
+            <li>Improve follow-up consistency</li>
+            <li>Simplify client workflows</li>
+            <li>Build practical internal tools</li>
           </ul>
         </div>
-        <div class="hero-card">
-          <h3>What Clearstone helps you do</h3>
-          <p>Move from messy process reality to clearer workflow, stronger execution, and more useful business tools.</p>
-          <div class="stat">
-            <div class="cardlet"><strong>Audit</strong><span>Find bottlenecks, friction, and improvement priorities.</span></div>
-            <div class="cardlet"><strong>Upgrade</strong><span>Implement better structure, automation, and AI support.</span></div>
-            <div class="cardlet"><strong>Build</strong><span>Create lightweight tools around repeatable workflows.</span></div>
-            <div class="cardlet"><strong>FundMentor</strong><span>Featured solution for portfolio planning and client-ready workflow.</span></div>
+
+        <div class="hero-visual reveal">
+          <div class="flow-line"></div>
+          <div class="flow-line two"></div>
+
+          <div class="hero-card">
+            <h3>What Clearstone helps you do</h3>
+            <p>Turn scattered tasks, repeated manual work, and inconsistent processes into workflows that are easier to manage and easier to scale.</p>
+            <div class="stat">
+              <div class="cardlet"><strong>Find the friction</strong><span>Map bottlenecks, handoff gaps, and recurring admin pain.</span></div>
+              <div class="cardlet"><strong>Fix the workflow</strong><span>Improve process structure, templates, follow-up, and reporting.</span></div>
+              <div class="cardlet"><strong>Use AI practically</strong><span>Apply AI where it saves time and improves clarity in real workflows.</span></div>
+              <div class="cardlet"><strong>Build the right tool</strong><span>Create lightweight internal tools when the workflow justifies it.</span></div>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
     <section>
-      <div class="wrap">
-        <h2>Most businesses do not have a technology problem first.</h2>
-        <p class="lead">They have a workflow problem: too much manual effort, disconnected tools, inconsistent follow-up, and processes that rely too heavily on memory or workarounds.</p>
+      <div class="wrap reveal">
+        <div class="section-kicker">Core problem</div>
+        <h2>Most workflow problems are not software problems first.</h2>
+        <p class="lead">They usually come from inconsistent processes, repeated manual effort, unclear ownership, and teams relying too heavily on memory, workarounds, or disconnected tools.</p>
         <div class="grid4">
           <div class="card">
-            <h3>Manual admin load</h3>
-            <p class="muted">Too many steps still depend on copying, pasting, repeating, and stitching together information.</p>
+            <h3>Manual admin overload</h3>
+            <p class="muted">Too many tasks still depend on copying, pasting, chasing information, and redoing work that should be more structured.</p>
           </div>
           <div class="card">
-            <h3>Weak process consistency</h3>
-            <p class="muted">Important work gets handled differently depending on who is doing it or how busy the day is.</p>
+            <h3>Inconsistent execution</h3>
+            <p class="muted">Important work gets handled differently depending on who is doing it, how busy the day is, or what gets remembered in the moment.</p>
           </div>
           <div class="card">
-            <h3>Fragmented client workflows</h3>
-            <p class="muted">Intake, reporting, proposals, and follow-up often feel slower and heavier than they should.</p>
+            <h3>Heavy client-facing workflows</h3>
+            <p class="muted">Intake, reporting, proposals, reviews, and follow-up often take more effort than they should and create avoidable friction.</p>
           </div>
           <div class="card">
-            <h3>Tools without workflow logic</h3>
-            <p class="muted">Teams may already have software, but not a cleaner operating structure behind how work actually moves.</p>
+            <h3>Tools without process logic</h3>
+            <p class="muted">Businesses may already have software in place, but not a cleaner workflow behind how work is actually supposed to move.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="services" style="background:#f8fafc">
-      <div class="wrap">
-        <h2>Solutions built around operational improvement</h2>
-        <p class="lead">Clearstone is structured around one promise and three offers. Each supports a different stage of the same journey: diagnose, improve, and build when needed.</p>
+    <section id="services" class="alt">
+      <div class="wrap reveal">
+        <div class="section-kicker">Solutions</div>
+        <h2>Services built around practical workflow improvement</h2>
+        <p class="lead">Clearstone works with firms that have recurring operational work, client-facing processes, and internal systems that feel heavier, slower, or less consistent than they should. The focus is simple: improve how work gets done, reduce avoidable friction, and build tools only where they genuinely help.</p>
         <div class="grid">
           <div class="card service-card">
-            <div class="tag">Offer 1</div>
+            <div class="tag">Pillar 1</div>
             <h3>Workflow Audit</h3>
-            <p class="muted">A structured review of how the process works today, where friction exists, and where the highest-value improvements can be made first.</p>
+            <p class="muted">See where time, clarity, and consistency are being lost through a structured review of the current workflow and its biggest friction points.</p>
             <ul>
               <li>Current-state workflow review</li>
               <li>Bottleneck and admin-friction analysis</li>
-              <li>Client-experience and follow-up gaps</li>
-              <li>Practical improvement roadmap</li>
+              <li>Client process and follow-up gaps</li>
+              <li>Role clarity and handoff review</li>
+              <li>Improvement roadmap and priorities</li>
             </ul>
+            <p class="muted"><strong>Best for:</strong> teams dealing with repeated bottlenecks, inconsistent execution, or too much work living in memory and workaround.</p>
           </div>
+
           <div class="card service-card">
-            <div class="tag">Offer 2</div>
-            <h3>Workflow Upgrade</h3>
-            <p class="muted">Targeted process improvement using better structure, practical AI-enabled support, templates, SOPs, automation, and workflow redesign.</p>
+            <div class="tag">Pillar 2</div>
+            <h3>Process Improvement Sprint</h3>
+            <p class="muted">Fix recurring workflow problems without overcomplicating the business through better structure, clearer documentation, and stronger operating flow.</p>
             <ul>
-              <li>Process redesign and documentation</li>
-              <li>AI-assisted summaries and communication workflows</li>
-              <li>Reporting and client-prep improvements</li>
-              <li>CRM and follow-up workflow support</li>
+              <li>Process redesign and simplification</li>
+              <li>SOPs, templates, and checklists</li>
+              <li>Client onboarding and follow-up improvements</li>
+              <li>Reporting and review workflow cleanup</li>
+              <li>CRM and communication workflow support</li>
             </ul>
+            <p class="muted"><strong>Best for:</strong> firms that know where the drag is and want practical operational improvement they can implement quickly.</p>
           </div>
+
           <div class="card service-card">
-            <div class="tag">Offer 3</div>
-            <h3>Custom Tool Build</h3>
-            <p class="muted">Lightweight internal-use tools designed around a specific business workflow to make repeatable work clearer, faster, and easier to manage.</p>
+            <div class="tag">Pillar 3</div>
+            <h3>Advisor & Client Workflow Tools</h3>
+            <p class="muted">Support recurring work with lightweight, usable internal tools designed around advisor workflows, client communication, reporting, and review cycles.</p>
             <ul>
+              <li>Portfolio review and planning tools</li>
+              <li>Workflow trackers and internal dashboards</li>
+              <li>Proposal and review assistants</li>
+              <li>Client-ready reporting helpers</li>
               <li>Intake and triage tools</li>
-              <li>Dashboards and reporting helpers</li>
-              <li>Proposal or review assistants</li>
-              <li>Workflow trackers and niche utilities</li>
+            </ul>
+            <p class="muted"><strong>Best for:</strong> teams with repeatable workflows that deserve more than spreadsheets, scattered notes, and disconnected systems.</p>
+          </div>
+
+          <div class="card service-card">
+            <div class="tag">Pillar 4</div>
+            <h3>Practical AI Implementation</h3>
+            <p class="muted">Use AI where it saves time and improves clarity in real workflows, without adding hype, complexity, or unnecessary tools.</p>
+            <ul>
+              <li>AI-assisted summaries and meeting notes</li>
+              <li>Client communication drafting support</li>
+              <li>Internal knowledge and workflow assistants</li>
+              <li>Document review and content organization workflows</li>
+              <li>Repeated admin and prep task support</li>
+            </ul>
+            <p class="muted"><strong>Best for:</strong> businesses that want to reduce low-value manual effort and make recurring work easier to execute.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="fit">
+      <div class="wrap reveal">
+        <div class="section-kicker">Who it's for</div>
+        <h2>Clearstone is best suited to workflow-heavy environments.</h2>
+        <p class="lead">The strongest fit is a business with recurring operational work that feels heavier, slower, or less consistent than it should.</p>
+        <div class="grid4">
+          <div class="card">
+            <h3>Financial professionals</h3>
+            <p class="muted">Advisors, planners, and small wealth teams looking to improve portfolio review, client communication, reporting, and recurring workflow execution.</p>
+          </div>
+          <div class="card">
+            <h3>Service businesses</h3>
+            <p class="muted">Firms that depend on repeatable intake, documentation, follow-up, and process consistency to operate smoothly.</p>
+          </div>
+          <div class="card">
+            <h3>Founder-led firms</h3>
+            <p class="muted">Businesses that have grown to a point where stronger systems, better structure, and clearer workflows are needed.</p>
+          </div>
+          <div class="card">
+            <h3>Lean operating teams</h3>
+            <p class="muted">Teams that want practical systems and workflow improvement without the overhead of enterprise software or large consulting programs.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="alt">
+      <div class="wrap reveal">
+        <div class="section-kicker">Common challenges</div>
+        <h2>Typical workflow problems Clearstone helps solve</h2>
+        <p class="lead">These are the kinds of operational issues that often sit in the background for too long — functional enough to continue, but not strong enough to scale cleanly.</p>
+        <div class="grid2">
+          <div class="card">
+            <h3>Common signs the workflow needs attention</h3>
+            <ul class="challenge-list">
+              <li>Client onboarding still depends too much on memory and manual steps.</li>
+              <li>Follow-up quality varies across the team or drops when things get busy.</li>
+              <li>Reporting, prep work, or review cycles take longer than they should.</li>
+              <li>Too many tasks involve copying information between tools or recreating the same output repeatedly.</li>
+              <li>Important work lives across email, spreadsheets, and disconnected systems.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Where improvement usually creates value</h3>
+            <ul class="challenge-list">
+              <li>Cleaner intake, review, and follow-up workflows.</li>
+              <li>Better consistency across recurring client-facing processes.</li>
+              <li>Reduced admin drag and fewer workflow bottlenecks.</li>
+              <li>Clearer visibility into work in progress and next steps.</li>
+              <li>More usable internal tools for repeated tasks and decisions.</li>
             </ul>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="fundmentor">
-      <div class="wrap grid2">
+    <section id="process" class="how">
+      <div class="wrap reveal">
+        <div class="section-kicker">How it works</div>
+        <h2>Start with the workflow. Improve what matters. Build only if needed.</h2>
+        <p class="lead">The approach is deliberately simple: start with the workflow, focus on the highest-value improvements, and introduce tools only where they genuinely improve execution.</p>
+        <div class="grid4">
+          <div class="card">
+            <div class="step-num">1</div>
+            <h3>Assess the workflow</h3>
+            <p class="muted">Review how the work currently moves, where time is being lost, and where clarity or ownership is weak.</p>
+          </div>
+          <div class="card">
+            <div class="step-num">2</div>
+            <h3>Prioritize what matters</h3>
+            <p class="muted">Focus on the highest-value improvements first rather than generating a long list of ideas with little execution value.</p>
+          </div>
+          <div class="card">
+            <div class="step-num">3</div>
+            <h3>Improve the process</h3>
+            <p class="muted">Implement practical workflow changes, better documentation, templates, AI-assisted support, and clearer operating structure.</p>
+          </div>
+          <div class="card">
+            <div class="step-num">4</div>
+            <h3>Build only if needed</h3>
+            <p class="muted">When a workflow deserves its own tool, create a lightweight solution built around how the business actually operates.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="fundmentor" class="alt">
+      <div class="wrap grid2 reveal">
         <div>
-          <h2>Featured solution: FundMentor</h2>
-          <p class="lead">FundMentor is positioned as a Clearstone solution for advisor and wealth workflows, not as the whole company. It shows how Clearstone thinks: business first, workflow-driven, and practical in use.</p>
+          <div class="section-kicker">Featured example</div>
+          <h2>FundMentor is a live example of the Clearstone approach.</h2>
+          <p class="lead">FundMentor is not the whole company. It is a proof point — a practical workflow solution built for advisor and wealth workflows that shows how Clearstone approaches process clarity, tool design, and client-facing usability.</p>
           <div class="card feature-main">
-            <span class="tag">Portfolio planning and review solution</span>
+            <span class="tag">Portfolio planning and review workflow solution</span>
             <h3>Build, review, and explain portfolios with more clarity.</h3>
-            <p class="muted">FundMentor helps advisors and wealth teams move from ETF ideas to more structured planning, portfolio diagnostics, and client-ready communication. It goes beyond a screener by supporting logic, review, and explainability within one workflow.</p>
+            <p class="muted">FundMentor helps advisors and wealth teams move from ETF ideas to more structured planning, portfolio diagnostics, and client-ready communication. It supports logic, review, and explainability in one workflow rather than acting as just another screener.</p>
             <ul class="feature-list">
               <li>Portfolio planning and sleeve design</li>
               <li>ETF comparison with clearer context</li>
@@ -255,113 +979,86 @@
               <li>Rebalancing workflow and client-ready notes</li>
             </ul>
             <div class="button-row">
-              <a class="btn" href="https://fundmentor.streamlit.app/" target="_blank" rel="noopener">Launch Demo</a>
-              <a class="ghost" href="https://saadbashir91.github.io/FundMentor/" target="_blank" rel="noopener">View FundMentor Site</a>
+              <a class="btn" href="[fundmentor.streamlit.app](https://fundmentor.streamlit.app/)" target="_blank" rel="noopener">Launch Demo</a>
+              <a class="ghost" href="[saadbashir91.github.io](https://saadbashir91.github.io/FundMentor/)" target="_blank" rel="noopener">View FundMentor Site</a>
             </div>
           </div>
         </div>
         <div class="trust">
           <div class="card">
-            <div class="metric">4-step</div>
-            <p class="muted">Plan, explore ideas, review the portfolio, and rebalance with more structure.</p>
+            <div class="metric">Workflow-led</div>
+            <p class="muted">Designed around how advisors actually review, compare, and explain portfolio decisions.</p>
           </div>
           <div class="card">
-            <div class="metric">Clearer</div>
-            <p class="muted">Designed for stronger client conversations, better workflow logic, and more usable portfolio review.</p>
+            <div class="metric">Client-ready</div>
+            <p class="muted">Built to support clearer communication, stronger review structure, and more usable outputs.</p>
           </div>
           <div class="card">
-            <div class="metric">Flexible</div>
-            <p class="muted">Works as a live demo, a conversation starter, and a proof point for Clearstone’s ability to build workflow solutions.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section style="background:#f8fafc">
-      <div class="wrap">
-        <h2>Who Clearstone works with</h2>
-        <p class="lead">The strongest fit is with workflow-heavy environments where manual work, client communication, and recurring operational processes still create drag.</p>
-        <div class="grid4">
-          <div class="card">
-            <h3>Financial professionals</h3>
-            <p class="muted">Advisors, wealth teams, planners, and firms looking to improve client-facing workflows and internal support processes.</p>
-          </div>
-          <div class="card">
-            <h3>Service businesses</h3>
-            <p class="muted">Businesses that depend on structured intake, documentation, follow-up, and process consistency to operate well.</p>
-          </div>
-          <div class="card">
-            <h3>Founder-led firms</h3>
-            <p class="muted">Teams where growth has outpaced process clarity and the operating model needs to become more intentional.</p>
-          </div>
-          <div class="card">
-            <h3>Workflow-heavy small teams</h3>
-            <p class="muted">Organizations that want improvement without the overhead of large, expensive transformation programs.</p>
+            <div class="metric">Proof of build</div>
+            <p class="muted">Shows Clearstone’s ability to turn a recurring workflow problem into a practical internal-use solution.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="process" class="how">
-      <div class="wrap">
-        <h2>How the work gets done</h2>
-        <p class="lead">The approach is deliberately simple. Clearstone starts with the workflow itself, then introduces tools where they genuinely help.</p>
+    <section>
+      <div class="wrap reveal">
+        <div class="section-kicker">Outcomes</div>
+        <h2>What better workflow improvement should lead to</h2>
+        <p class="lead">The goal is not more systems for the sake of it. It is better execution, less friction, and a business that can operate more consistently as it grows.</p>
         <div class="grid4">
           <div class="card">
-            <div class="step-num">1</div>
-            <h3>Assess</h3>
-            <p class="muted">Review the current workflow, understand where time and clarity are being lost, and map the core pain points.</p>
+            <h3>Less manual effort</h3>
+            <p class="muted">Reduce repetitive admin work and make recurring tasks easier to complete and easier to delegate.</p>
           </div>
           <div class="card">
-            <div class="step-num">2</div>
-            <h3>Prioritize</h3>
-            <p class="muted">Focus on the highest-value improvements first rather than generating a long list of ideas without execution value.</p>
+            <h3>More consistency</h3>
+            <p class="muted">Create clearer workflows so important work is handled with less variation across the team.</p>
           </div>
           <div class="card">
-            <div class="step-num">3</div>
-            <h3>Improve</h3>
-            <p class="muted">Implement practical workflow changes, documentation, templates, AI-assisted support, and better structure.</p>
+            <h3>Better client experience</h3>
+            <p class="muted">Improve the flow of intake, communication, review, and follow-up in client-facing processes.</p>
           </div>
           <div class="card">
-            <div class="step-num">4</div>
-            <h3>Build when needed</h3>
-            <p class="muted">If the workflow deserves its own tool, create a lightweight solution around how the business actually operates.</p>
+            <h3>Smarter internal tools</h3>
+            <p class="muted">Support recurring work with practical systems that fit how the business actually operates.</p>
           </div>
         </div>
       </div>
     </section>
 
     <section id="about" class="about-band">
-      <div class="wrap founder">
+      <div class="wrap founder reveal">
         <div class="card">
           <div class="founder-badge">About the founder</div>
-          <h2 style="margin-top:0">Built around process, clarity, and practical implementation.</h2>
-          <p class="muted">Clearstone Advisory was founded by Saad Bashir. His background spans business analysis, process engineering, wealth management, and financial technology — environments where structure, execution, and client-facing clarity matter.</p>
-          <p class="muted">Over time, the same pattern kept appearing: too much manual work, fragmented workflows, disconnected tools, and processes that were functional enough to continue, but not strong enough to scale cleanly.</p>
+          <h2 style="margin-top:0">Built by someone focused on process, clarity, and practical implementation.</h2>
+          <p class="muted">Clearstone Advisory was founded by Saad Bashir. His background spans business analysis, process engineering, wealth management, and financial technology — environments where recurring workflows, client-facing execution, and operational structure matter.</p>
+          <p class="muted">That experience led to a consistent observation: many businesses do not need more software first. They need clearer workflows, better operating logic, and practical systems that reduce friction in the work they repeat every day.</p>
         </div>
         <div class="card">
           <h3 style="margin-top:0">What that experience translates into</h3>
           <ul class="founder-list">
-            <li>Strong business-process thinking</li>
-            <li>Operational and workflow design perspective</li>
-            <li>Financial-services credibility and product understanding</li>
-            <li>Practical interest in AI and lightweight business tools</li>
+            <li>Business-process and workflow design thinking</li>
+            <li>Operational improvement perspective grounded in real working environments</li>
+            <li>Financial-services credibility and understanding of advisor workflows</li>
+            <li>Practical use of AI and lightweight internal tools where they genuinely add value</li>
           </ul>
           <h3 style="margin-top:24px">Why Clearstone exists</h3>
-          <p class="muted">The goal is not technology for its own sake. It is to help businesses improve how work gets done, create less friction, and operate with more structure through solutions that are commercially useful.</p>
-          <p class="muted">FundMentor is one example of that approach in action — a workflow solution built for a specific use case under a broader business focused on operational clarity.</p>
+          <p class="muted">The aim is to help small firms run more cleanly: less manual work, better follow-through, stronger process consistency, and tools that support the workflow instead of complicating it.</p>
+          <p class="muted">FundMentor is one example of that philosophy in practice — a specific workflow solution built under a broader business focused on operational clarity and useful implementation.</p>
         </div>
       </div>
     </section>
 
     <section id="contact" class="cta-band">
-      <div class="wrap">
+      <div class="wrap reveal">
         <div class="card">
-          <h2 style="color:#fff;margin-bottom:12px">Have a workflow problem worth solving?</h2>
-          <p class="lead">Whether the need is a workflow review, a targeted improvement project, or a more focused business tool, the first step is a conversation.</p>
+          <div class="section-kicker" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.12);color:#cfe1ff">Start here</div>
+          <h2 style="color:#fff;margin-bottom:12px">Start with a discovery call.</h2>
+          <p class="lead">Share the workflow challenge, recurring bottleneck, or process that feels heavier than it should. The first conversation is about identifying where improvement would create the most practical value.</p>
           <div class="cta">
             <a class="primary" href="mailto:saad.bashir.1991@gmail.com?subject=Discovery%20Call%20Request">Email Saad</a>
-            <a class="ghost" href="https://www.linkedin.com/company/fundmentorportfolioplanning/" target="_blank" rel="noopener">LinkedIn Page</a>
+            <a class="ghost" href="[linkedin.com](https://www.linkedin.com/company/fundmentorportfolioplanning/)" target="_blank" rel="noopener">LinkedIn Page</a>
           </div>
         </div>
       </div>
@@ -372,13 +1069,14 @@
     <div class="wrap footer-grid">
       <div>
         <div class="footer-title">Clearstone Advisory</div>
-        <div>Workflow improvement, practical AI implementation, and custom business tools.</div>
+        <div>Workflow improvement for financial professionals and service businesses.</div>
         <div style="margin-top:8px">Featured solution: FundMentor</div>
       </div>
       <div>
         <div class="footer-title">Links</div>
         <div class="footer-list">
           <a href="#services">Solutions</a>
+          <a href="#fit">Who it's for</a>
           <a href="#fundmentor">FundMentor</a>
           <a href="#about">About</a>
           <a href="#contact">Contact</a>
@@ -387,12 +1085,32 @@
       <div>
         <div class="footer-title">External</div>
         <div class="footer-list">
-          <a href="https://saadbashir91.github.io/FundMentor/" target="_blank" rel="noopener">FundMentor Website</a>
-          <a href="https://fundmentor.streamlit.app/" target="_blank" rel="noopener">Launch Demo</a>
-          <a href="https://www.linkedin.com/company/fundmentorportfolioplanning/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="[saadbashir91.github.io](https://saadbashir91.github.io/FundMentor/)" target="_blank" rel="noopener">FundMentor Website</a>
+          <a href="[fundmentor.streamlit.app](https://fundmentor.streamlit.app/)" target="_blank" rel="noopener">Launch Demo</a>
+          <a href="[linkedin.com](https://www.linkedin.com/company/fundmentorportfolioplanning/)" target="_blank" rel="noopener">LinkedIn</a>
         </div>
       </div>
     </div>
   </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+        }
+      });
+    }, { threshold: 0.14 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    const header = document.getElementById('site-header');
+    const onScroll = () => {
+      if (window.scrollY > 12) header.classList.add('scrolled');
+      else header.classList.remove('scrolled');
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  </script>
 </body>
 </html>
